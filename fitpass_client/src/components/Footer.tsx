@@ -6,7 +6,7 @@ import { Dumbbell } from "lucide-react";
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-slate-950 border-t border-slate-800/60 py-6 px-6 text-slate-400 text-xs relative z-10">
+        <footer className="w-full bg-[#080b11] border-t border-white/10 py-6 px-6 text-slate-400 text-xs relative z-10">
             <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
                 {/* Brand */}
                 <Link href="/" className="flex items-center gap-2 group">

@@ -30,19 +30,19 @@ export default async function PricingPage() {
   ];
 
   return (
-    <main className="flex-1 py-16 px-6 relative overflow-hidden">
+    <main className="flex-1 py-16 px-6 relative overflow-hidden bg-[#080b11]">
       {/* Background Ambient Lights */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[850px] h-[400px] bg-gradient-to-tr from-violet-600/20 via-indigo-600/15 to-cyan-500/20 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Page Header */}
       <div className="max-w-4xl mx-auto text-center mb-16 relative z-10">
-        <div className="inline-flex items-center gap-2 bg-slate-900/80 border border-slate-800 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-violet-300 mb-4">
-          <Zap className="w-3.5 h-3.5 text-violet-400" /> Transparent Pricing, Zero Hidden Fees
+        <div className="inline-flex items-center gap-2 bg-[#0f172a]/80 border border-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-violet-300 mb-4 shadow-xl">
+          <Zap className="w-3.5 h-3.5 text-cyan-400" /> Transparent Pricing, Zero Hidden Fees
         </div>
         <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
           Choose the Perfect FitPass Plan
         </h1>
-        <p className="text-slate-400 text-sm sm:text-base max-w-lg mx-auto">
+        <p className="text-slate-300/90 text-sm sm:text-base max-w-lg mx-auto">
           Switch or upgrade anytime. Unused days on your previous plan are credited automatically to your account balance.
         </p>
       </div>
@@ -57,11 +57,11 @@ export default async function PricingPage() {
           <p className="text-xs text-slate-400">Compare features included in each FitPass subscription tier</p>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 rounded-3xl overflow-hidden backdrop-blur-xl shadow-2xl">
+        <div className="bg-[#0f172a]/80 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-xl shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="bg-slate-950/80 border-b border-slate-800 text-slate-300 text-xs font-bold uppercase tracking-wider">
+                <tr className="bg-[#080b11]/80 border-b border-white/10 text-slate-300 text-xs font-bold uppercase tracking-wider">
                   <th className="p-5">Feature</th>
                   <th className="p-5 text-center text-blue-400">Basic ($9.99/mo)</th>
                   <th className="p-5 text-center text-violet-400">Premium ($19.99/mo)</th>

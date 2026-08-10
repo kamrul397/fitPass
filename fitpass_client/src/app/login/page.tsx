@@ -61,14 +61,14 @@ export default function LoginPage() {
         : "";
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-slate-950 px-6 py-12 relative overflow-hidden text-slate-100 selection:bg-violet-500 selection:text-white">
+        <main className="min-h-screen flex items-center justify-center bg-[#080b11] px-6 py-12 relative overflow-hidden text-slate-100 selection:bg-violet-500 selection:text-white">
             {/* Background Ambient Lights */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none" />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-violet-600/20 to-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
 
             <motion.div
                 initial={{ opacity: 0, y: 20, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="w-full max-w-md bg-slate-900/90 border border-slate-800 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative z-10"
+                className="w-full max-w-md bg-[#0f172a]/90 border border-white/10 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative z-10"
             >
                 {/* Header Logo */}
                 <div className="text-center mb-8">

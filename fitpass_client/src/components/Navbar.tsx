@@ -49,19 +49,19 @@ export default function Navbar() {
     };
 
     return (
-        <header className="w-full relative z-40 backdrop-blur-xl bg-slate-950/90 border-b border-slate-800/80 px-6 py-4 transition-all">
+        <header className="w-full relative z-40 backdrop-blur-xl bg-[#080b11]/80 border-b border-white/10 px-6 py-4 transition-all">
             <div className="max-w-6xl mx-auto flex items-center justify-between">
 
                 {/* Brand Logo */}
                 <Link href="/" className="flex items-center gap-2.5 group">
                     <motion.div
                         whileHover={{ rotate: 15, scale: 1.1 }}
-                        className="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-purple-400 flex items-center justify-center text-white shadow-lg shadow-violet-500/25"
+                        className="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-violet-500/25"
                     >
                         <Dumbbell className="w-5 h-5" />
                     </motion.div>
                     <span className="text-2xl font-black tracking-tight text-white">
-                        Fit<span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">Pass</span>
+                        Fit<span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Pass</span>
                     </span>
                 </Link>
 
@@ -113,7 +113,7 @@ export default function Navbar() {
 
                             <Link
                                 href="/dashboard"
-                                className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-white px-3.5 py-1.5 rounded-xl transition-all"
+                                className="flex items-center gap-2 bg-[#0f172a]/90 hover:bg-[#1e293b] border border-white/10 text-white px-3.5 py-1.5 rounded-xl transition-all"
                             >
                                 {user.photoURL ? (
                                     <img
@@ -144,13 +144,13 @@ export default function Navbar() {
                     ) : (
                         <div className="flex items-center gap-3">
                             <Link
-                                href="/auth"
+                                href="/login"
                                 className="text-sm font-semibold text-slate-300 hover:text-white px-4 py-2 transition-colors"
                             >
                                 Sign In
                             </Link>
                             <Link
-                                href="/auth"
+                                href="/register"
                                 className="text-sm font-bold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-violet-500/25 transition-all hover:scale-[1.02]"
                             >
                                 Get Started

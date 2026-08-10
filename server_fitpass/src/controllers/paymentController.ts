@@ -88,9 +88,32 @@ async function calculateProration(userId: string, targetPlanName: string, target
 async function fulfillOrder(session: Stripe.Checkout.Session) {
     const { planName, amount, userEmail, userId } = session.metadata || {};
 
-    // Return existing subscription if this session was already processed
+    // Check if subscription or payment has already been processed for this session
     const existingSub = await Subscription.findOne({ stripeSessionId: session.id });
+    const existingPayment = await Payment.findOne({ checkoutSessionId: session.id });
+
     if (existingSub) {
+        // Ensure payment record exists once if webhook/confirm raced
+        if (!existingPayment && userEmail) {
+            let user = await User.findOne({ email: userEmail });
+            if (user) {
+                try {
+                    await Payment.create({
+                        userId: user._id,
+                        paymentIntentId: (session.payment_intent as string) || session.id,
+                        checkoutSessionId: session.id,
+                        plan: planName || "Premium",
+                        amount: parseFloat(amount || "0"),
+                        currency: session.currency || "usd",
+                        status: "paid",
+                    });
+                } catch (err: any) {
+                    if (err.code !== 11000) {
+                        console.error("[fulfillOrder] Error creating payment record:", err);
+                    }
+                }
+            }
+        }
         return existingSub;
     }
 
@@ -142,19 +165,22 @@ async function fulfillOrder(session: Stripe.Checkout.Session) {
         }
     }
 
-    try {
-        await Payment.create({
-            userId: user._id,
-            paymentIntentId: (session.payment_intent as string) || session.id,
-            checkoutSessionId: session.id,
-            plan: planName || "Premium",
-            amount: parseFloat(amount || "0"),
-            currency: session.currency || "usd",
-            status: "paid",
-        });
-    } catch (err: any) {
-        if (err.code !== 11000) {
-            console.error("[fulfillOrder] Error creating payment record:", err);
+    // Create payment record idempotently
+    if (!existingPayment) {
+        try {
+            await Payment.create({
+                userId: user._id,
+                paymentIntentId: (session.payment_intent as string) || session.id,
+                checkoutSessionId: session.id,
+                plan: planName || "Premium",
+                amount: parseFloat(amount || "0"),
+                currency: session.currency || "usd",
+                status: "paid",
+            });
+        } catch (err: any) {
+            if (err.code !== 11000) {
+                console.error("[fulfillOrder] Error creating payment record:", err);
+            }
         }
     }
 
@@ -367,7 +393,19 @@ export const getPaymentHistory = async (req: Request, res: Response) => {
             userId: new mongoose.Types.ObjectId(userId),
         }).sort({ createdAt: -1 }); // newest first
 
-        res.json(payments);
+        // Deduplicate payments by checkoutSessionId or paymentIntentId
+        const uniquePayments = [];
+        const seenSessions = new Set<string>();
+
+        for (const payment of payments) {
+            const key = payment.checkoutSessionId || payment.paymentIntentId || payment._id.toString();
+            if (!seenSessions.has(key)) {
+                seenSessions.add(key);
+                uniquePayments.push(payment);
+            }
+        }
+
+        res.json(uniquePayments);
     } catch (error) {
         console.error("[getPaymentHistory] Error:", error);
         res.status(500).json({ message: "Failed to fetch payment history" });

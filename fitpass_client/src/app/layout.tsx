@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-violet-500 selection:text-white">
+      <body className="bg-[#080b11] text-slate-100 min-h-screen flex flex-col selection:bg-violet-500 selection:text-white antialiased">
         <QueryProvider>
           <Navbar />
           <div className="flex-1">{children}</div>

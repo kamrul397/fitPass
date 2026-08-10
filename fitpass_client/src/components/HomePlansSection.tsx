@@ -56,7 +56,7 @@ export default function HomePlansSection({ plans }: HomePlansSectionProps) {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-14 bg-gradient-to-r from-violet-950 via-purple-900/60 to-slate-900 border border-violet-500/40 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl backdrop-blur-xl relative overflow-hidden"
+                    className="mb-14 bg-gradient-to-r from-violet-950/80 via-indigo-950/60 to-[#0f172a] border border-white/10 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl backdrop-blur-xl relative overflow-hidden"
                 >
                     <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-violet-600/20 rounded-full blur-3xl" />
 
