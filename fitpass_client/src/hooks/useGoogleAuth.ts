@@ -25,7 +25,17 @@ const saveUserToBackend = async (payload: {
 export function useGoogleAuth() {
     const mutation = useMutation<void, Error, { name: string; email: string; photoURL: string }>({
         mutationFn: saveUserToBackend,
-        onSuccess: () => {
+        onSuccess: async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`, { credentials: "include" });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.role === "admin") {
+                        window.location.href = "/admin";
+                        return;
+                    }
+                }
+            } catch {}
             window.location.href = "/dashboard";
         },
         onError: async () => {

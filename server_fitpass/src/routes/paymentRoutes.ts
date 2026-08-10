@@ -1,6 +1,6 @@
 // src/routes/paymentRoutes.ts
 import express from "express";
-import { createCheckoutSession, stripeWebhook, confirmSession, previewSwitch, getMySubscription, getPaymentHistory } from "../controllers/paymentController";
+import { createCheckoutSession, stripeWebhook, confirmSession, previewSwitch, getMySubscription, getPaymentHistory, getAllPayments } from "../controllers/paymentController";
 import { verifyToken } from "../middlewares/authMiddleware";
 
 const router = express.Router();
@@ -19,6 +19,9 @@ router.get("/my-subscription", verifyToken, getMySubscription);
 
 // Protected: get the current user's payment history
 router.get("/history", verifyToken, getPaymentHistory);
+
+// Protected: get all platform payments (Admin Only Overview)
+router.get("/all", verifyToken, getAllPayments);
 
 // Public: Stripe sends raw body — no JSON parsing here
 router.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);

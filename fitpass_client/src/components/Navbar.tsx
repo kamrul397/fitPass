@@ -53,7 +53,7 @@ export default function Navbar() {
             <div className="max-w-6xl mx-auto flex items-center justify-between">
 
                 {/* Brand Logo */}
-                <Link href="/" className="flex items-center gap-2.5 group">
+                <Link href={userRole === "admin" ? "/admin" : "/"} className="flex items-center gap-2.5 group">
                     <motion.div
                         whileHover={{ rotate: 15, scale: 1.1 }}
                         className="w-10 h-10 rounded-xl bg-gradient-to-tr from-violet-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-violet-500/25"
@@ -67,21 +67,26 @@ export default function Navbar() {
 
                 {/* Nav Links */}
                 <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
-                    <Link href="/" className="hover:text-white transition-colors">
-                        Home
-                    </Link>
-                    <Link href="/pricing" className="hover:text-white transition-colors">
-                        Pricing Plans
-                    </Link>
-                    <Link href="/dashboard" className="hover:text-white transition-colors flex items-center gap-1.5">
-                        <LayoutDashboard className="w-4 h-4 text-violet-400" />
-                        Dashboard
-                    </Link>
-                    {userRole === "admin" && (
-                        <Link href="/admin" className="text-amber-400 hover:text-amber-300 font-bold transition-colors flex items-center gap-1.5">
-                            <ShieldCheck className="w-4 h-4" />
+                    {userRole === "admin" ? (
+                        <Link href="/admin" className="text-amber-400 hover:text-amber-300 font-bold transition-colors flex items-center gap-1.5 text-base">
+                            <ShieldCheck className="w-4 h-4 text-amber-400" />
                             Admin Panel
                         </Link>
+                    ) : (
+                        <>
+                            <Link href="/" className="hover:text-white transition-colors">
+                                Home
+                            </Link>
+                            <Link href="/pricing" className="hover:text-white transition-colors">
+                                Pricing Plans
+                            </Link>
+                            {user && (
+                                <Link href="/dashboard" className="hover:text-white transition-colors flex items-center gap-1.5">
+                                    <LayoutDashboard className="w-4 h-4 text-violet-400" />
+                                    Dashboard
+                                </Link>
+                            )}
+                        </>
                     )}
                 </nav>
 
@@ -90,57 +95,72 @@ export default function Navbar() {
                     {loading ? (
                         <div className="h-9 w-24 bg-slate-800/60 rounded-xl animate-pulse" />
                     ) : user ? (
-                        <div className="flex items-center gap-3">
-                            {/* Member Status Badge */}
-                            {hasActiveSub && (
-                                <motion.span
-                                    initial={{ scale: 0.9, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    className="hidden lg:flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3 py-1.5 rounded-full"
+                        userRole === "admin" ? (
+                            <div className="flex items-center gap-3">
+                                <span className="bg-amber-500/10 text-amber-300 border border-amber-500/20 text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                    <ShieldCheck className="w-3.5 h-3.5" /> Admin
+                                </span>
+                                <button
+                                    onClick={handleLogout}
+                                    className="inline-flex items-center gap-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-bold px-4 py-2 rounded-xl transition-all"
                                 >
-                                    <Sparkles className="w-3.5 h-3.5" />
-                                    Active Member
-                                </motion.span>
-                            )}
-
-                            {/* Credit Balance Badge (Only if > 0) */}
-                            {creditBalance > 0 && (
-                                <span className="hidden lg:flex items-center gap-1.5 bg-amber-500/10 text-amber-300 border border-amber-500/20 text-xs font-bold px-3 py-1.5 rounded-full">
-                                    <Wallet className="w-3.5 h-3.5 text-amber-400" />
-                                    ${creditBalance.toFixed(2)}
-                                </span>
-                            )}
-
-                            <Link
-                                href="/dashboard"
-                                className="flex items-center gap-2 bg-[#0f172a]/90 hover:bg-[#1e293b] border border-white/10 text-white px-3.5 py-1.5 rounded-xl transition-all"
-                            >
-                                {user.photoURL ? (
-                                    <img
-                                        src={user.photoURL}
-                                        alt={user.displayName || "User"}
-                                        referrerPolicy="no-referrer"
-                                        className="w-7 h-7 rounded-full border border-violet-500 object-cover"
-                                    />
-                                ) : (
-                                    <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-xs">
-                                        {(user.displayName || user.email || "U")[0].toUpperCase()}
-                                    </div>
+                                    <LogOut className="w-4 h-4" />
+                                    <span>Logout</span>
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3">
+                                {/* Member Status Badge */}
+                                {hasActiveSub && (
+                                    <motion.span
+                                        initial={{ scale: 0.9, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        className="hidden lg:flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold px-3 py-1.5 rounded-full"
+                                    >
+                                        <Sparkles className="w-3.5 h-3.5" />
+                                        Active Member
+                                    </motion.span>
                                 )}
-                                <span className="text-xs font-semibold text-slate-200 hidden sm:inline-block max-w-[120px] truncate">
-                                    {user.displayName || user.email?.split("@")[0]}
-                                </span>
-                            </Link>
 
-                            <motion.button
-                                whileTap={{ scale: 0.95 }}
-                                onClick={handleLogout}
-                                className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
-                                title="Sign Out"
-                            >
-                                <LogOut className="w-4 h-4" />
-                            </motion.button>
-                        </div>
+                                {/* Credit Balance Badge (Only if > 0) */}
+                                {creditBalance > 0 && (
+                                    <span className="hidden lg:flex items-center gap-1.5 bg-amber-500/10 text-amber-300 border border-amber-500/20 text-xs font-bold px-3 py-1.5 rounded-full">
+                                        <Wallet className="w-3.5 h-3.5 text-amber-400" />
+                                        ${creditBalance.toFixed(2)}
+                                    </span>
+                                )}
+
+                                <Link
+                                    href="/dashboard"
+                                    className="flex items-center gap-2 bg-[#0f172a]/90 hover:bg-[#1e293b] border border-white/10 text-white px-3.5 py-1.5 rounded-xl transition-all"
+                                >
+                                    {user.photoURL ? (
+                                        <img
+                                            src={user.photoURL}
+                                            alt={user.displayName || "User"}
+                                            referrerPolicy="no-referrer"
+                                            className="w-7 h-7 rounded-full border border-violet-500 object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-xs">
+                                            {(user.displayName || user.email || "U")[0].toUpperCase()}
+                                        </div>
+                                    )}
+                                    <span className="text-xs font-semibold text-slate-200 hidden sm:inline-block max-w-[120px] truncate">
+                                        {user.displayName || user.email?.split("@")[0]}
+                                    </span>
+                                </Link>
+
+                                <motion.button
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={handleLogout}
+                                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
+                                    title="Sign Out"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                </motion.button>
+                            </div>
+                        )
                     ) : (
                         <div className="flex items-center gap-3">
                             <Link

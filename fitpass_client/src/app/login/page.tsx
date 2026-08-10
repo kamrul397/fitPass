@@ -44,7 +44,17 @@ export default function LoginPage() {
 
     const emailMutation = useMutation<void, Error, LoginFormData>({
         mutationFn: loginWithEmail,
-        onSuccess: () => {
+        onSuccess: async () => {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`, { credentials: "include" });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.role === "admin") {
+                        window.location.href = "/admin";
+                        return;
+                    }
+                }
+            } catch {}
             window.location.href = "/dashboard";
         },
     });

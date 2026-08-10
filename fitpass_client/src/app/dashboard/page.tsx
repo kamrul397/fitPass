@@ -45,6 +45,10 @@ export default function Dashboard() {
                     return;
                 }
                 const data = await res.json();
+                if (data.role === "admin") {
+                    window.location.href = "/admin";
+                    return;
+                }
                 setUser(data);
             } catch {
                 window.location.href = "/login";

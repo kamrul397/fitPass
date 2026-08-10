@@ -411,3 +411,28 @@ export const getPaymentHistory = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Failed to fetch payment history" });
     }
 };
+
+// ─────────────────────────────────────────────────────────────
+// FUNCTION 6: Get all platform payments (Admin Only Overview)
+// ─────────────────────────────────────────────────────────────
+export const getAllPayments = async (req: Request, res: Response) => {
+    try {
+        const payments = await Payment.find().sort({ createdAt: -1 });
+
+        const uniquePayments = [];
+        const seenSessions = new Set<string>();
+
+        for (const payment of payments) {
+            const key = payment.checkoutSessionId || payment.paymentIntentId || payment._id.toString();
+            if (!seenSessions.has(key)) {
+                seenSessions.add(key);
+                uniquePayments.push(payment);
+            }
+        }
+
+        res.json(uniquePayments);
+    } catch (error) {
+        console.error("[getAllPayments] Error:", error);
+        res.status(500).json({ message: "Failed to fetch all payments" });
+    }
+};
