@@ -1,6 +1,9 @@
 // src/app/page.tsx
 import { Plan } from "@/types";
 import HomePlansSection from "@/components/HomePlansSection";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import FaqSection from "@/components/FaqSection";
+import ContactSection from "@/components/ContactSection";
 import { Dumbbell, ShieldCheck, Zap, Award, Sparkles } from "lucide-react";
 
 async function getPlans(): Promise<Plan[]> {
@@ -29,45 +32,77 @@ export default async function Home() {
       <div className="absolute top-96 left-1/4 w-[550px] h-[350px] bg-cyan-600/10 rounded-full blur-[130px] pointer-events-none" />
 
       {/* ── HERO SECTION ── */}
-      <section className="max-w-5xl mx-auto text-center mb-20 relative z-10">
-        {/* Top Pill Badge */}
-        <div className="inline-flex items-center gap-2 bg-[#0f172a]/80 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-violet-300 mb-6 shadow-2xl">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
-          <span>One Pass for 500+ Top Gyms Nationwide</span>
-        </div>
+      <section className="max-w-6xl mx-auto mb-20 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-left mb-16">
+          {/* Left Column: Text & CTAs */}
+          <div className="lg:col-span-7 text-center lg:text-left">
+            {/* Top Pill Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#0f172a]/80 border border-white/10 backdrop-blur-md px-4 py-2 rounded-full text-xs font-bold text-violet-300 mb-6 shadow-2xl">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>One Pass for 500+ Top Gyms Nationwide</span>
+            </div>
 
-        {/* Main Title */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight mb-6">
-          Work Out Anywhere with{" "}
-          <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
-            One Single Pass.
-          </span>
-        </h1>
+            {/* Main Title */}
+            <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-tight mb-6">
+              Work Out Anywhere with{" "}
+              <span className="bg-gradient-to-r from-violet-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+                One Single Pass.
+              </span>
+            </h1>
 
-        {/* Subtitle */}
-        <p className="max-w-2xl mx-auto text-slate-300/90 text-lg sm:text-xl font-normal leading-relaxed mb-8">
-          Access top gyms, fitness clubs, and boutique studios with no long-term contracts. Pause, upgrade, or switch plans anytime.
-        </p>
+            {/* Subtitle */}
+            <p className="max-w-xl text-slate-300/90 text-base sm:text-lg font-normal leading-relaxed mb-8 mx-auto lg:mx-0">
+              Access top gyms, fitness clubs, and boutique studios with no long-term contracts. Pause, upgrade, or switch plans anytime.
+            </p>
 
-        {/* Hero CTA Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
-          <a
-            href="/register"
-            className="bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 text-white text-base font-extrabold px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/25 hover:scale-[1.03] transition-all flex items-center gap-2 group"
-          >
-            <span>Get Started Now</span>
-            <Zap className="w-5 h-5 text-cyan-300 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-          <a
-            href="#plans"
-            className="bg-[#0f172a]/80 hover:bg-[#1e293b] border border-white/10 text-slate-200 text-base font-semibold px-8 py-4 rounded-2xl backdrop-blur-md transition-all hover:text-white"
-          >
-            Explore Plans
-          </a>
+            {/* Hero CTA Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+              <a
+                href="/register"
+                className="bg-gradient-to-r from-violet-600 via-indigo-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 text-white text-base font-extrabold px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/25 hover:scale-[1.03] transition-all flex items-center gap-2 group"
+              >
+                <span>Get Started Now</span>
+                <Zap className="w-5 h-5 text-cyan-300 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <a
+                href="#plans"
+                className="bg-[#0f172a]/80 hover:bg-[#1e293b] border border-white/10 text-slate-200 text-base font-semibold px-8 py-4 rounded-2xl backdrop-blur-md transition-all hover:text-white"
+              >
+                Explore Plans
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Gym Image Showcase */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#0f172a]/80 shadow-2xl p-2 group">
+              {/* Gym Image */}
+              <img
+                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop"
+                alt="Modern Gym Interior"
+                className="w-full h-[380px] sm:h-[420px] object-cover rounded-2xl group-hover:scale-105 transition-transform duration-700"
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080b11] via-transparent to-transparent opacity-80" />
+
+              {/* Floating Badge Top Left */}
+              <div className="absolute top-6 left-6 bg-[#0f172a]/90 backdrop-blur-md border border-white/15 px-4 py-2 rounded-2xl shadow-xl flex items-center gap-2">
+                <Dumbbell className="w-4 h-4 text-violet-400" />
+                <span className="text-xs font-black text-white">500+ Partner Gyms</span>
+              </div>
+
+              {/* Floating Badge Bottom Right */}
+              <div className="absolute bottom-6 right-6 bg-[#0f172a]/90 backdrop-blur-md border border-white/15 px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-xs font-bold text-slate-200">Instant QR Access</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Stats Ticker */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6 border-t border-white/10 text-left">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto pt-8 border-t border-white/10 text-left">
           <div className="bg-[#0f172a]/60 border border-white/10 hover:border-violet-500/30 p-4 rounded-2xl backdrop-blur-md transition-colors">
             <p className="text-2xl font-black text-white flex items-center gap-2">
               <Dumbbell className="w-5 h-5 text-violet-400" />
@@ -99,6 +134,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ── WHY CHOOSE US ── */}
+      <WhyChooseUs />
+
       {/* ── PLANS SECTION ── */}
       <section className="relative z-10">
         <div className="text-center mb-12">
@@ -112,6 +150,12 @@ export default async function Home() {
 
         <HomePlansSection plans={plans} />
       </section>
+
+      {/* ── FAQ SECTION ── */}
+      <FaqSection />
+
+      {/* ── CONTACT SECTION ── */}
+      <ContactSection />
     </main>
   );
 }
