@@ -1,6 +1,7 @@
 # 🏋️ FitPass – Full-Stack SaaS Gym Subscription Platform
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-https%3A%2F%2Ffit--pass--azure.vercel.app-7C3AED?style=for-the-badge&logo=vercel)](https://fit-pass-azure.vercel.app)
+[![Frontend Live](https://img.shields.io/badge/Frontend_Live-https%3A%2F%2Ffit--pass--azure.vercel.app-7C3AED?style=for-the-badge&logo=vercel)](https://fit-pass-azure.vercel.app)
+[![Backend Live](https://img.shields.io/badge/Backend_Live-https%3A%2F%2Ffitpass--2kco.onrender.com-46E3B7?style=for-the-badge&logo=render)](https://fitpass-2kco.onrender.com)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?style=for-the-badge&logo=next.js)
 ![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)
@@ -11,7 +12,8 @@
 
 > **FitPass** is a production-grade full-stack SaaS web application where users can discover, purchase, and manage nationwide gym membership subscriptions using Stripe. Built with clean architecture, strict TypeScript, secure HTTP-Only JWT authentication, and smart proration for plan switches.
 
-🌐 **Live Web Application**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)
+🌐 **Frontend Application (Vercel)**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)  
+⚡ **Backend API Server (Render)**: [https://fitpass-2kco.onrender.com](https://fitpass-2kco.onrender.com)
 
 ---
 
@@ -20,7 +22,7 @@
 - **⚡ Modern Dark & Glassmorphism Interface**: Designed with Next.js 16 App Router, React 19, Tailwind CSS v4, DaisyUI, and Framer Motion micro-animations.
 - **🔐 Hybrid Firebase & HTTP-Only JWT Auth**:
   - Firebase Authentication for Email/Password and Google Sign-In on the client.
-  - Backend verifies identity and issues an **HTTP-Only JWT Cookie** to shield tokens against XSS attacks.
+  - Backend verifies identity and issues an **HTTP-Only JWT Cookie** (`sameSite: "none"` in prod) shielding tokens against XSS attacks.
 - **💳 Complete Stripe Payment Engine**:
   - Secure Stripe Checkout sessions for subscription purchases.
   - Asynchronous webhook listener (`/api/payments/webhook`) with raw-body signature verification for idempotent order fulfillment.
@@ -100,9 +102,9 @@ FitPass/
 
 ## ⚙️ Environment Variables Setup
 
-### 1. Frontend (`fitpass_client/.env.local`)
+### 1. Frontend (`fitpass_client`) — Vercel Settings
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_API_URL=https://fitpass-2kco.onrender.com
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
@@ -112,7 +114,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
 ```
 
-### 2. Backend (`server_fitpass/.env`)
+### 2. Backend (`server_fitpass`) — Render Settings
 ```env
 PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/fitpass?retryWrites=true&w=majority
@@ -120,7 +122,7 @@ JWT_SECRET=your_jwt_super_secret_key
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=whsec_your_stripe_webhook_secret
 FRONTEND_URL=https://fit-pass-azure.vercel.app
-NODE_ENV=development
+NODE_ENV=production
 ```
 
 ---
@@ -190,5 +192,5 @@ Distributed under the MIT License. See `LICENSE` for details.
 ---
 
 <p align="center">
-  Built with ❤️ for fitness enthusiasts nationwide. Live at <a href="https://fit-pass-azure.vercel.app">fit-pass-azure.vercel.app</a>
+  Frontend: <a href="https://fit-pass-azure.vercel.app">fit-pass-azure.vercel.app</a> | Backend: <a href="https://fitpass-2kco.onrender.com">fitpass-2kco.onrender.com</a>
 </p>

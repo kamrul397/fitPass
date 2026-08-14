@@ -2,6 +2,7 @@
 
 Backend API server for **FitPass**, handling authentication, Stripe checkout & webhooks, plan management, and role-based access control.
 
+⚡ **Backend Production API**: [https://fitpass-2kco.onrender.com](https://fitpass-2kco.onrender.com)  
 🌐 **Frontend Production App**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)
 
 ---
@@ -24,7 +25,7 @@ npm install
 ```
 
 ### 2. Configure Environment Variables
-Create `.env` in this directory:
+Create `.env` in this directory (or add in Render Environment Variables):
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
@@ -32,7 +33,7 @@ JWT_SECRET=your_jwt_secret
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
 FRONTEND_URL=https://fit-pass-azure.vercel.app
-NODE_ENV=development
+NODE_ENV=production
 ```
 
 ### 3. Seed Initial Database Plans
