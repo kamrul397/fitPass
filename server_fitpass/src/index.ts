@@ -29,10 +29,17 @@ app.post("/api/payments/webhook", express.raw({ type: "application/json" }), str
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: "http://localhost:3000",  // frontend URL
-    credentials: true,               // allow cookies
-}));
+const allowedOrigins = [
+    "http://localhost:3000",
+    process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
+
+app.use(
+    cors({
+        origin: allowedOrigins,
+        credentials: true,
+    })
+);
 
 app.use("/api/plans", planRoutes);
 app.use("/api/auth", authRoutes);
