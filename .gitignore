@@ -23,6 +23,8 @@ dist/
 # Project documentation & Markdown files
 *.md
 **/*.md
+!README.md
+!**/README.md
 
 # Debug logs
 npm-debug.log*
