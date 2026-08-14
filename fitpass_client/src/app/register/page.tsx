@@ -19,16 +19,24 @@ type BackendUserPayload = {
 };
 
 const registerUserOnBackend = async (payload: BackendUserPayload): Promise<void> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/jwt`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-    });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    try {
+        const res = await fetch(`${baseUrl}/api/auth/jwt`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+        });
 
-    if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Failed to register. Please try again.");
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Failed to register. Please try again.");
+        }
+    } catch (err: unknown) {
+        if (err instanceof Error && (err.name === "TypeError" || err.message.includes("fetch"))) {
+            throw new Error(`Unable to connect to backend server (${baseUrl || "URL missing"}). Please verify backend is running and NEXT_PUBLIC_API_URL is configured.`);
+        }
+        throw err;
     }
 };
 

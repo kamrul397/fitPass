@@ -14,21 +14,29 @@ import Link from "next/link";
 const loginWithEmail = async (credentials: LoginFormData): Promise<void> => {
     const result = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
     const user = result.user;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/jwt`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-            name: user.displayName || "FitPass User",
-            email: user.email || "",
-            photoURL: user.photoURL || "",
-        }),
-    });
+    try {
+        const res = await fetch(`${baseUrl}/api/auth/jwt`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                name: user.displayName || "FitPass User",
+                email: user.email || "",
+                photoURL: user.photoURL || "",
+            }),
+        });
 
-    if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Login failed. Please try again.");
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Login failed. Please try again.");
+        }
+    } catch (err: unknown) {
+        if (err instanceof Error && (err.name === "TypeError" || err.message.includes("fetch"))) {
+            throw new Error(`Unable to connect to backend server (${baseUrl || "URL missing"}). Please verify backend is running and NEXT_PUBLIC_API_URL is configured.`);
+        }
+        throw err;
     }
 };
 
