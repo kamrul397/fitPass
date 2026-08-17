@@ -363,8 +363,6 @@ export const getMySubscription = async (req: Request, res: Response) => {
     try {
         const { userId, email } = (req as any).user;
 
-        console.log(`[getMySubscription] Looking up subscription for userId=${userId} email=${email}`);
-
         const subscription = await Subscription.findOne({
             userId: new mongoose.Types.ObjectId(userId),
             status: "active",

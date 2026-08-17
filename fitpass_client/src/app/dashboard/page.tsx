@@ -3,10 +3,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { DashboardSkeleton } from "@/components/SkeletonLoaders";
 import { User } from "@/types";
 import { downloadInvoicePDF } from "@/utils/pdfInvoice";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { ShieldCheck, QrCode, Calendar, Wallet, Dumbbell, ArrowRight, Receipt, CheckCircle2, Download } from "lucide-react";
 
 interface Subscription {
@@ -27,6 +29,8 @@ interface Payment {
 }
 
 export default function Dashboard() {
+    const router = useRouter();
+    const { user: authUser, loading: authLoading } = useAuthUser();
     const [user, setUser] = useState<User | null>(null);
     const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [payments, setPayments] = useState<Payment[]>([]);
@@ -35,23 +39,30 @@ export default function Dashboard() {
     const [loadingPayments, setLoadingPayments] = useState(true);
 
     useEffect(() => {
+        if (!authLoading && !authUser) {
+            router.replace("/login");
+            return;
+        }
+    }, [authUser, authLoading, router]);
+
+    useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`, {
                     credentials: "include",
                 });
                 if (!res.ok) {
-                    window.location.href = "/login";
+                    router.replace("/login");
                     return;
                 }
                 const data = await res.json();
                 if (data.role === "admin") {
-                    window.location.href = "/admin";
+                    router.replace("/admin");
                     return;
                 }
                 setUser(data);
             } catch {
-                window.location.href = "/login";
+                router.replace("/login");
             } finally {
                 setLoadingUser(false);
             }
@@ -87,12 +98,14 @@ export default function Dashboard() {
             }
         };
 
-        fetchProfile();
-        fetchSubscription();
-        fetchPayments();
-    }, []);
+        if (authUser) {
+            fetchProfile();
+            fetchSubscription();
+            fetchPayments();
+        }
+    }, [authUser, router]);
 
-    const loading = loadingUser || loadingSub || loadingPayments;
+    const loading = authLoading || loadingUser || loadingSub || loadingPayments;
 
     const formatDate = (iso: string) =>
         new Date(iso).toLocaleDateString("en-US", {
@@ -108,6 +121,14 @@ export default function Dashboard() {
         Premium: "bg-violet-500/10 text-violet-400 border-violet-500/20",
         Elite: "bg-amber-500/10 text-amber-300 border-amber-500/20",
     };
+
+    if (loading || !user) {
+        return (
+            <main className="py-12 px-6 max-w-5xl mx-auto space-y-8">
+                <DashboardSkeleton />
+            </main>
+        );
+    }
 
     return (
         <main className="py-12 px-6 max-w-5xl mx-auto space-y-8">
@@ -126,12 +147,8 @@ export default function Dashboard() {
                 </Link>
             </div>
 
-            {loading ? (
-                <DashboardSkeleton />
-            ) : (
-                <>
-                    {/* ── PROFILE CARD ── */}
-                    <motion.div
+            {/* ── PROFILE CARD ── */}
+            <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="bg-[#0f172a]/80 border border-white/10 backdrop-blur-xl rounded-3xl p-5 sm:p-8 flex flex-col sm:flex-row items-center gap-5 sm:gap-6 shadow-xl"
@@ -374,8 +391,6 @@ export default function Dashboard() {
                             </>
                         )}
                     </div>
-                </>
-            )}
         </main>
     );
 }

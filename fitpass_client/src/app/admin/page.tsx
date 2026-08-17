@@ -2,7 +2,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { User } from "@/types";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { ShieldCheck, Users, DollarSign, Receipt, ArrowRight, UserCheck, CheckCircle2, Lock } from "lucide-react";
 import Link from "next/link";
 
@@ -25,6 +27,8 @@ interface PaymentRecord {
 }
 
 export default function AdminDashboard() {
+    const router = useRouter();
+    const { user: authUser, loading: authLoading } = useAuthUser();
     const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
     const [users, setUsers] = useState<User[]>([]);
     const [payments, setPayments] = useState<PaymentRecord[]>([]);
@@ -32,9 +36,28 @@ export default function AdminDashboard() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!authLoading && !authUser) {
+            router.replace("/login");
+            return;
+        }
+    }, [authUser, authLoading, router]);
+
+    useEffect(() => {
         const fetchAdminData = async () => {
             setLoading(true);
             try {
+                // Verify admin profile first
+                const profileRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/profile`, { credentials: "include" });
+                if (!profileRes.ok) {
+                    router.replace("/login");
+                    return;
+                }
+                const profile = await profileRes.json();
+                if (profile.role !== "admin") {
+                    router.replace("/dashboard");
+                    return;
+                }
+
                 const [analyticsRes, usersRes, paymentsRes] = await Promise.all([
                     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/analytics`, { credentials: "include" }),
                     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/all`, { credentials: "include" }),
@@ -57,8 +80,10 @@ export default function AdminDashboard() {
             }
         };
 
-        fetchAdminData();
-    }, []);
+        if (authUser) {
+            fetchAdminData();
+        }
+    }, [authUser, router]);
 
     const formatDate = (iso: string) =>
         new Date(iso).toLocaleDateString("en-US", {
