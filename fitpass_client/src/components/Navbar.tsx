@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuthUser } from "@/hooks/useAuthUser";
@@ -9,6 +10,7 @@ import { motion } from "framer-motion";
 import { Dumbbell, LogOut, LayoutDashboard, Sparkles, Wallet, ShieldCheck } from "lucide-react";
 
 export default function Navbar() {
+    const pathname = usePathname();
     const { user, loading } = useAuthUser();
     const [hasActiveSub, setHasActiveSub] = useState(false);
     const [creditBalance, setCreditBalance] = useState<number>(0);
@@ -48,6 +50,11 @@ export default function Navbar() {
         }
     };
 
+    const isActive = (path: string) => {
+        if (path === "/") return pathname === "/";
+        return pathname.startsWith(path);
+    };
+
     return (
         <header className="w-full relative z-40 backdrop-blur-xl bg-[#080b11]/80 border-b border-white/10 px-6 py-4 transition-all">
             <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -66,23 +73,51 @@ export default function Navbar() {
                 </Link>
 
                 {/* Nav Links */}
-                <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+                <nav className="hidden md:flex items-center gap-2 text-sm font-semibold text-slate-300">
                     {userRole === "admin" ? (
-                        <Link href="/admin" className="text-amber-400 hover:text-amber-300 font-bold transition-colors flex items-center gap-1.5 text-base">
+                        <Link
+                            href="/admin"
+                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl transition-all ${
+                                isActive("/admin")
+                                    ? "bg-amber-500/15 text-amber-300 border border-amber-500/30 font-bold shadow-md shadow-amber-500/10"
+                                    : "text-amber-400/80 hover:text-amber-300 hover:bg-amber-500/10"
+                            }`}
+                        >
                             <ShieldCheck className="w-4 h-4 text-amber-400" />
                             Admin Panel
                         </Link>
                     ) : (
                         <>
-                            <Link href="/" className="hover:text-white transition-colors">
+                            <Link
+                                href="/"
+                                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                                    isActive("/")
+                                        ? "bg-violet-600/20 text-white font-bold border border-violet-500/30 shadow-md shadow-violet-500/10"
+                                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                                }`}
+                            >
                                 Home
                             </Link>
-                            <Link href="/pricing" className="hover:text-white transition-colors">
+                            <Link
+                                href="/pricing"
+                                className={`px-3.5 py-1.5 rounded-xl transition-all ${
+                                    isActive("/pricing")
+                                        ? "bg-violet-600/20 text-white font-bold border border-violet-500/30 shadow-md shadow-violet-500/10"
+                                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                                }`}
+                            >
                                 Pricing Plans
                             </Link>
                             {user && (
-                                <Link href="/dashboard" className="hover:text-white transition-colors flex items-center gap-1.5">
-                                    <LayoutDashboard className="w-4 h-4 text-violet-400" />
+                                <Link
+                                    href="/dashboard"
+                                    className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl transition-all ${
+                                        isActive("/dashboard")
+                                            ? "bg-violet-600/20 text-white font-bold border border-violet-500/30 shadow-md shadow-violet-500/10"
+                                            : "text-slate-400 hover:text-white hover:bg-white/5"
+                                    }`}
+                                >
+                                    <LayoutDashboard className={`w-4 h-4 ${isActive("/dashboard") ? "text-violet-400" : "text-slate-400"}`} />
                                     Dashboard
                                 </Link>
                             )}
