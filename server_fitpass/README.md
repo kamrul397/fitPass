@@ -2,8 +2,8 @@
 
 Backend API server for **FitPass**, handling authentication, Stripe checkout & webhooks, plan management, and role-based access control.
 
-⚡ **Backend Production API**: [https://fitpass-2kco.onrender.com](https://fitpass-2kco.onrender.com)  
-🌐 **Frontend Production App**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)
+⚡ **Backend Production API**: [https://fitpass-hx0c.onrender.com](https://fitpass-hx0c.onrender.com)  
+🌐 **Frontend Production App**: [https://fit-pass-omega.vercel.app](https://fit-pass-omega.vercel.app)
 
 ---
 
@@ -32,7 +32,7 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 STRIPE_SECRET_KEY=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
-FRONTEND_URL=https://fit-pass-azure.vercel.app
+FRONTEND_URL=https://fit-pass-omega.vercel.app
 NODE_ENV=production
 ```
 

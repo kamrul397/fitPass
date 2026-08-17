@@ -1,7 +1,7 @@
 # 🏋️ FitPass – Full-Stack SaaS Gym Subscription Platform
 
-[![Frontend Live](https://img.shields.io/badge/Frontend_Live-https%3A%2F%2Ffit--pass--azure.vercel.app-7C3AED?style=for-the-badge&logo=vercel)](https://fit-pass-azure.vercel.app)
-[![Backend Live](https://img.shields.io/badge/Backend_Live-https%3A%2F%2Ffitpass--2kco.onrender.com-46E3B7?style=for-the-badge&logo=render)](https://fitpass-2kco.onrender.com)
+[![Frontend Live](https://img.shields.io/badge/Frontend_Live-https%3A%2F%2Ffit--pass--omega.vercel.app-7C3AED?style=for-the-badge&logo=vercel)](https://fit-pass-omega.vercel.app)
+[![Backend Live](https://img.shields.io/badge/Backend_Live-https%3A%2F%2Ffitpass--hx0c.onrender.com-46E3B7?style=for-the-badge&logo=render)](https://fitpass-hx0c.onrender.com)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?style=for-the-badge&logo=next.js)
 ![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)
@@ -12,8 +12,8 @@
 
 > **FitPass** is a production-grade full-stack SaaS web application where users can discover, purchase, and manage nationwide gym membership subscriptions using Stripe. Built with clean architecture, strict TypeScript, secure HTTP-Only JWT authentication, and smart proration for plan switches.
 
-🌐 **Frontend Application (Vercel)**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)  
-⚡ **Backend API Server (Render)**: [https://fitpass-2kco.onrender.com](https://fitpass-2kco.onrender.com)
+🌐 **Frontend Application (Vercel)**: [https://fit-pass-omega.vercel.app](https://fit-pass-omega.vercel.app)  
+⚡ **Backend API Server (Render)**: [https://fitpass-hx0c.onrender.com](https://fitpass-hx0c.onrender.com)
 
 ---
 
@@ -104,7 +104,7 @@ FitPass/
 
 ### 1. Frontend (`fitpass_client`) — Vercel Settings
 ```env
-NEXT_PUBLIC_API_URL=https://fitpass-2kco.onrender.com
+NEXT_PUBLIC_API_URL=https://fitpass-hx0c.onrender.com
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
@@ -121,7 +121,7 @@ MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/fitpass?retryW
 JWT_SECRET=your_jwt_super_secret_key
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=whsec_your_stripe_webhook_secret
-FRONTEND_URL=https://fit-pass-azure.vercel.app
+FRONTEND_URL=https://fit-pass-omega.vercel.app
 NODE_ENV=production
 ```
 
@@ -192,5 +192,5 @@ Distributed under the MIT License. See `LICENSE` for details.
 ---
 
 <p align="center">
-  Frontend: <a href="https://fit-pass-azure.vercel.app">fit-pass-azure.vercel.app</a> | Backend: <a href="https://fitpass-2kco.onrender.com">fitpass-2kco.onrender.com</a>
+  Frontend: <a href="https://fit-pass-omega.vercel.app">fit-pass-omega.vercel.app</a> | Backend: <a href="https://fitpass-hx0c.onrender.com">fitpass-hx0c.onrender.com</a>
 </p>

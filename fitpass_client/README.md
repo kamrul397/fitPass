@@ -2,8 +2,8 @@
 
 Frontend repository for **FitPass**, a full-stack SaaS Gym Subscription Platform.
 
-🌐 **Frontend Production App**: [https://fit-pass-azure.vercel.app](https://fit-pass-azure.vercel.app)  
-⚡ **Backend API Server**: [https://fitpass-2kco.onrender.com](https://fitpass-2kco.onrender.com)
+🌐 **Frontend Production App**: [https://fit-pass-omega.vercel.app](https://fit-pass-omega.vercel.app)  
+⚡ **Backend API Server**: [https://fitpass-hx0c.onrender.com](https://fitpass-hx0c.onrender.com)
 
 ---
 
@@ -30,7 +30,7 @@ npm install
 ### 2. Configure Environment Variables
 Create `.env.local` in this directory (or add in Vercel Environment Variables):
 ```env
-NEXT_PUBLIC_API_URL=https://fitpass-2kco.onrender.com
+NEXT_PUBLIC_API_URL=https://fitpass-hx0c.onrender.com
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
